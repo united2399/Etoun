@@ -21,6 +21,8 @@ colorama.init()
 
 sand = Operator("Sand", 300, 300)
 
+operators = [sand]
+
 # Enemies
 
 slug = Enemy("Slug", 600, 0)
@@ -64,16 +66,31 @@ while True:
   while menu == "recruitment":
     clear()
     time.sleep (0.05)
-    pass
+    print ("(x) Main menu")
+    print ("(1) Recruit")
+    e = input("")
+    if e == "x":
+      menu = "main"
 
   # Squads
   while menu == "squads":
     clear()
     time.sleep (0.05)
-    pass
+    print ("(x) Main menu")
+    print ("(1) Squad 1")
+    e = input("")
+    if e == "x":
+      menu = "main"
 
   # Operators
   while menu == "operators":
     clear()
     time.sleep (0.05)
-    pass
+    print ("(x) Main menu")
+    print (player_operators)
+    e = input("")
+    if e == "x":
+      menu = "main"
+
+
+
