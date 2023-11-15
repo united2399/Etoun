@@ -22,6 +22,7 @@ from Utils import clear
 sand = Operator("Sand", 300, 300)
 
 operators = [sand]
+squad_1 = [sand]
 
 # Enemies
 
@@ -81,6 +82,8 @@ while True:
     e = input("")
     if e == "x":
       menu = "main"
+    if e == "1":
+      print (squad_1)
 
   # Operators
   while menu == "operators":
