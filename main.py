@@ -14,7 +14,7 @@ from Utils import clear
 
 
 # Setting up the modules
-colorama.init()
+# colorama.init() # for some reason colorama is currently fucked
 
 
 # Operators
