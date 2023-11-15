@@ -2,12 +2,12 @@
 import time
 import random
 import math
-import colorama
+# import colorama # for some reason colorama is currently fucked
 import os
 
 
 # From imports
-from colorama import Fore, Back, Style
+# from colorama import Fore, Back, Style # for some reason colorama is currently fucked
 from Classes import Operator, Enemy
 from Utils import clear
 
