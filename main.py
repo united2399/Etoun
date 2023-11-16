@@ -32,6 +32,23 @@ slug = Enemy("Slug", 600, 0)
 current_enemies = []
 active_enemies = []
 
+# Define a dictionary for stage 1 deployment spots and their strategic values
+stage_1_deploy_spots = {
+    "Spot_A": {"Location": 1, "View_range": [1, 2, 3, 4, 5], "% of attack": "40"},
+    "Spot_B": {"Location": 2, "View_range": [2, 3, 4], "% of attack": "15"},
+    "Spot_C": {"Location": 3, "View_range": [1, 2, 3, 4, 5, 6], "% of attack": "50"},
+    "Spot_D": {"Location": 4, "View_range": [2, 3, 4, 5, 6], "% of attack": "40"},
+    "Spot_E": {"Location": 5, "View_range": [3, 4, 5, 7], "% of attack": "30"},
+}
+
+# Access and print information about each deployment spot
+for spot, info in stage_1_deploy_spots.items():
+    print(f"{spot}")
+    print(f"Location: ({info['Location']})")
+    print(f"View range: ({info['View_range']})")
+    print(f"% of attack: {info['% of attack']}")
+    print("\n")
+
 menu = "main"
 
 while True:
@@ -77,6 +94,19 @@ while True:
       
       # Stage 1
       if e == "1":
+        # Access and print information about each deployment spot
+        for spot, info in stage_1_deploy_spots.items():
+            print(f"{spot}")
+            print(f"Location: ({info['Location']})")
+            print(f"View range: ({info['View_range']})")
+            print(f"% of attack: {info['% of attack']}")
+            print("\n")
+
+        input("You will now get to choose on which spot you want your squad operators to be on. \n Press Enter to continue.")
+        for operator in squad_1:
+          for spot in stage_1_deploy_spots.items():
+            input(f"Place {operator.name} on {spot}?")
+          
         while True:
           # Set operator count and downed operator count to 0
           operator_count = 0
