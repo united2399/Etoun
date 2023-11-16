@@ -29,6 +29,9 @@ active_squad = 1
 
 slug = Enemy("Slug", 600, 0)
 
+current_enemies = []
+active_enemies = []
+
 menu = "main"
 
 while True:
@@ -64,12 +67,15 @@ while True:
     if e == "x":
       menu = "main"
       
+    # Story mission set 1
     while e == "1":
       clear()
       time.sleep (0.05)
       print ("(x) Back")
       print ("(1) Stage 1")
       e = input("")
+      
+      # Stage 1
       if e == "1":
         while True:
           # Set operator count and downed operator count to 0
@@ -86,6 +92,17 @@ while True:
           # if all operators are downed, end the mission.
           if downed_operators == operator_count:
             print ("mission: failure.")
+            break
+
+          # same thing here as above but for enemies
+          enemy_count = 0
+          downed_enemies = 0
+          for i in current_enemies:
+            enemy_count += 1
+            if i.health < 0.1:
+              downed_enemies += 1
+          if enemy_count == downed_enemies:
+            print ("mission: success")
             break
         
       
