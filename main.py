@@ -23,6 +23,7 @@ sand = Operator("Sand", 300, 300)
 
 operators = [sand]
 squad_1 = [sand]
+active_squad = 1
 
 # Enemies
 
@@ -62,6 +63,32 @@ while True:
     e = input("")
     if e == "x":
       menu = "main"
+      
+    while e == "1":
+      clear()
+      time.sleep (0.05)
+      print ("(x) Back")
+      print ("(1) Stage 1")
+      e = input("")
+      if e == "1":
+        while True:
+          # Set operator count and downed operator count to 0
+          operator_count = 0
+          downed_operators = 0
+          # check which squad is being used
+          if active_squad == 1:
+            # loop over all the operators in the squad
+            for i in squad_1:
+              # Increase the operator count by 1
+              operator_count += 1
+              if i.health < 0.1: # if the operator is downed
+                downed_operators += 1 # increase the downed operator count by 1
+          # if all operators are downed, end the mission.
+          if downed_operators == operator_count:
+            print ("mission: failure.")
+            break
+        
+      
 
   # Recruitment
   while menu == "recruitment":
