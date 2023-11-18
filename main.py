@@ -158,7 +158,8 @@ while True:
     if e == "x":
       menu = "main"
     if e == "1":
-      print (squad_1)
+      for operator in squad_1:
+        print (operator)
 
   # Operators
   while menu == "operators":
