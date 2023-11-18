@@ -33,6 +33,8 @@ slug = Enemy("Slug", 600, 0, 5)
 current_enemies = []
 active_enemies = []
 
+p_lives = 5
+
 menu = "main"
 
 while True:
@@ -83,6 +85,8 @@ while True:
           # Set operator count and downed operator count to 0
           operator_count = 0
           downed_operators = 0
+          # Reset some stuff
+          operatorhasattacked = False
           # check which squad is being used
           if active_squad == 1:
             # loop over all the operators in the squad
@@ -94,6 +98,7 @@ while True:
           # if all operators are downed, end the mission.
           if downed_operators == operator_count or p_lives < 0:
             print ("mission: failure.")
+            input("")
             break
 
           # same thing here as above but for enemies
@@ -113,6 +118,7 @@ while True:
           # continue as normal as above
           if enemy_count == downed_enemies and p_lives > 0:
             print ("mission: success")
+            input("")
             break
 
           if active_squad == "1":
@@ -153,6 +159,7 @@ while True:
                     operatorhasattacked = True
                     enemy.health -= operator.attack
                     break 
+              operatorhasattacked = False # Reset it for the next operator
               
         
       
