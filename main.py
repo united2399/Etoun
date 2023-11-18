@@ -80,8 +80,8 @@ while True:
       
       # Stage 1
       if e == "1":
-        current_enemies = [Enemy("Slug", 600, 0) for _ in range(3)]
-        active_enemies = [Enemy("Slug", 600, 0) for _ in range(3)]
+        current_enemies = [Enemy("Slug", 600, 0, 5) for _ in range(3)]
+        active_enemies = [Enemy("Slug", 600, 0, 5) for _ in range(3)]
 
         while True:
           # Set operator count and downed operator count to 0
@@ -105,18 +105,19 @@ while True:
 
           # same thing here as above but for enemies
           enemy_count = 0
-          downed_enemies = 0
           for i in current_enemies:
             enemy_count += 1
             if i.health < 0.1:
-              downed_enemies += 1
-          if enemy_count == downed_enemies and p_lives > 0:
+              active_enemies.remove(i)
+          if enemy_count == 0 and p_lives > 0:
             print ("mission: success")
             print (f"lives remaining: {p_lives}")
             input("")
             break
             
           for i in active_enemies:
+            if i.health < 0.1:
+              active_enemies.remove(i)
             if i.health > 0.1:
               i.turnstopass -= 1
               if i.turnstopass < 0:
@@ -125,19 +126,23 @@ while True:
                 print (f"{i.name} passed your defense. -1 life.")
                 # checking if the enemies passed le defense
                 if downed_operators == operator_count or p_lives < 0:
+                  print ("")
+                  print ("^^^^ Combat log (for nerds and occasionally debugging) ^^^^")
                   print ("mission: failure.")
                   input("")
                   break
             
-          print (len(current_enemies))
-          print (len(active_enemies))
+          print (f"number of inactive enemies: {len(current_enemies)}")
+          print (f"number of active enemies: {len(active_enemies)}")
+          for i in active_enemies:
+            print (f"{i.name} hp: {i.health}")
           if len(active_enemies) < 1 and len(current_enemies) > 0:
             e = random.choice(current_enemies)
             active_enemies.append(e)
             current_enemies.remove(e)
             
 
-          if active_squad == "1":
+          if active_squad == 1:
             for operator in squad_1:
               operatorhasattacked = False
             for operator in squad_1:
