@@ -20,11 +20,12 @@ class Operator:
 # Enemy class
 
 class Enemy:
-    def __init__(self, name, health, attack):
+    def __init__(self, name, health, attack, turnstopass):
         self.name = name
         self.health = health
         self.maxhealth = health
         self.attack = attack
+        self.turnstopass = turnstopass
 
     def __str__(self):
         return f"Name: {self.name}, Health: {self.health}, Attack: {self.attack}"
