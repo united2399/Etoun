@@ -80,7 +80,9 @@ while True:
       
       # Stage 1
       if e == "1":
-          
+        current_enemies = [Enemy("Slug", 600, 0) for _ in range(3)]
+        active_enemies = [Enemy("Slug", 600, 0) for _ in range(3)]
+
         while True:
           # Set operator count and downed operator count to 0
           operator_count = 0
@@ -108,57 +110,74 @@ while True:
             enemy_count += 1
             if i.health < 0.1:
               downed_enemies += 1
-            # check if the enemy can pass the defense
-            else:
+          if enemy_count == downed_enemies and p_lives > 0:
+            print ("mission: success")
+            print (f"lives remaining: {p_lives}")
+            input("")
+            break
+            
+          for i in active_enemies:
+            if i.health > 0.1:
               i.turnstopass -= 1
               if i.turnstopass < 0:
                 p_lives -= 1
                 i.health -= 999999 # kill the enemy once it passes
                 print (f"{i.name} passed your defense. -1 life.")
-          # continue as normal as above
-          if enemy_count == downed_enemies and p_lives > 0:
-            print ("mission: success")
-            input("")
-            break
+                # checking if the enemies passed le defense
+                if downed_operators == operator_count or p_lives < 0:
+                  print ("mission: failure.")
+                  input("")
+                  break
+            
+          print (len(current_enemies))
+          print (len(active_enemies))
+          if len(active_enemies) < 1 and len(current_enemies) > 0:
+            e = random.choice(current_enemies)
+            active_enemies.append(e)
+            current_enemies.remove(e)
+            
 
           if active_squad == "1":
             for operator in squad_1:
               operatorhasattacked = False
             for operator in squad_1:
               # if enemy will pass in 1 turn
-              for enemy in current_enemies:
+              for enemy in active_enemies:
                 if enemy.turnstopass == 0:
                   operatorhasattacked = True
                   enemy.health -= operator.attack
                   break
               # if enemy will pass in 2 turns
               if operatorhasattacked == False:
-                for enemy in current_enemies:
+                for enemy in active_enemies:
                   if enemy.turnstopass == 1:
                     operatorhasattacked = True
                     enemy.health -= operator.attack
                     break 
               # if enemy will pass in 3 turns
               if operatorhasattacked == False:
-                for enemy in current_enemies:
+                for enemy in active_enemies:
                   if enemy.turnstopass == 2:
                     operatorhasattacked = True
                     enemy.health -= operator.attack
                     break 
               # if enemy will pass in 4 turns
               if operatorhasattacked == False:
-                for enemy in current_enemies:
+                for enemy in active_enemies:
                   if enemy.turnstopass == 3:
                     operatorhasattacked = True
                     enemy.health -= operator.attack
                     break 
               # if enemy will pass in 5 turns
               if operatorhasattacked == False:
-                for enemy in current_enemies:
+                for enemy in active_enemies:
                   if enemy.turnstopass == 43:
                     operatorhasattacked = True
                     enemy.health -= operator.attack
                     break 
+
+              if operatorhasattacked == True:
+                print (f"{operator.name} has attacked an enemy dealing {operator.attack} damage!")
               operatorhasattacked = False # Reset it for the next operator
               
         
