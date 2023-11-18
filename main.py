@@ -19,7 +19,7 @@ from Utils import clear
 
 # Operators
 
-sand = Operator("Sand", 300, 300)
+sand = Operator("Sand", "DPS", 300, 300)
 
 operators = [sand]
 squad_1 = [sand]
