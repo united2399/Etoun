@@ -28,27 +28,10 @@ active_squad = 1
 
 # Enemies
 
-slug = Enemy("Slug", 600, 0)
+slug = Enemy("Slug", 600, 0, 5)
 
 current_enemies = []
 active_enemies = []
-
-# Define a dictionary for stage 1 deployment spots and their strategic values
-stage_1_deploy_spots = {
-    "Spot_A": {"Location": 1, "View_range": [1, 2, 3, 4, 5], "% of attack": "40"},
-    "Spot_B": {"Location": 2, "View_range": [2, 3, 4], "% of attack": "15"},
-    "Spot_C": {"Location": 3, "View_range": [1, 2, 3, 4, 5, 6], "% of attack": "50"},
-    "Spot_D": {"Location": 4, "View_range": [2, 3, 4, 5, 6], "% of attack": "40"},
-    "Spot_E": {"Location": 5, "View_range": [3, 4, 5, 7], "% of attack": "30"},
-}
-
-# Access and print information about each deployment spot
-for spot, info in stage_1_deploy_spots.items():
-    print(f"{spot}")
-    print(f"Location: ({info['Location']})")
-    print(f"View range: ({info['View_range']})")
-    print(f"% of attack: {info['% of attack']}")
-    print("\n")
 
 menu = "main"
 
@@ -95,18 +78,6 @@ while True:
       
       # Stage 1
       if e == "1":
-        # Access and print information about each deployment spot
-        for spot, info in stage_1_deploy_spots.items():
-            print(f"{spot}")
-            print(f"Location: ({info['Location']})")
-            print(f"View range: ({info['View_range']})")
-            print(f"% of attack: {info['% of attack']}")
-            print("\n")
-
-        input("You will now get to choose on which spot you want your squad operators to be on. \n Press Enter to continue.")
-        for operator in squad_1:
-          for spot in stage_1_deploy_spots.items():
-            input(f"Place {operator.name} on {spot}?")
           
         while True:
           # Set operator count and downed operator count to 0
@@ -121,7 +92,7 @@ while True:
               if i.health < 0.1: # if the operator is downed
                 downed_operators += 1 # increase the downed operator count by 1
           # if all operators are downed, end the mission.
-          if downed_operators == operator_count:
+          if downed_operators == operator_count or p_lives < 0:
             print ("mission: failure.")
             break
 
@@ -132,9 +103,57 @@ while True:
             enemy_count += 1
             if i.health < 0.1:
               downed_enemies += 1
-          if enemy_count == downed_enemies:
+            # check if the enemy can pass the defense
+            else:
+              i.turnstopass -= 1
+              if i.turnstopass < 0:
+                p_lives -= 1
+                i.health -= 999999 # kill the enemy once it passes
+                print (f"{i.name} passed your defense. -1 life.")
+          # continue as normal as above
+          if enemy_count == downed_enemies and p_lives > 0:
             print ("mission: success")
             break
+
+          if active_squad == "1":
+            for operator in squad_1:
+              operatorhasattacked = False
+            for operator in squad_1:
+              # if enemy will pass in 1 turn
+              for enemy in current_enemies:
+                if enemy.turnstopass == 0:
+                  operatorhasattacked = True
+                  enemy.health -= operator.attack
+                  break
+              # if enemy will pass in 2 turns
+              if operatorhasattacked == False:
+                for enemy in current_enemies:
+                  if enemy.turnstopass == 1:
+                    operatorhasattacked = True
+                    enemy.health -= operator.attack
+                    break 
+              # if enemy will pass in 3 turns
+              if operatorhasattacked == False:
+                for enemy in current_enemies:
+                  if enemy.turnstopass == 2:
+                    operatorhasattacked = True
+                    enemy.health -= operator.attack
+                    break 
+              # if enemy will pass in 4 turns
+              if operatorhasattacked == False:
+                for enemy in current_enemies:
+                  if enemy.turnstopass == 3:
+                    operatorhasattacked = True
+                    enemy.health -= operator.attack
+                    break 
+              # if enemy will pass in 5 turns
+              if operatorhasattacked == False:
+                for enemy in current_enemies:
+                  if enemy.turnstopass == 43:
+                    operatorhasattacked = True
+                    enemy.health -= operator.attack
+                    break 
+              
         
       
 
