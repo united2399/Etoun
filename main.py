@@ -22,6 +22,7 @@ from Utils import clear
 sand = Operator("Sand", "DPS", 300, 300)
 
 operators = [sand]
+player_operators = [sand]
 squad_1 = [sand]
 active_squad = 1
 
@@ -164,10 +165,8 @@ while True:
     clear()
     time.sleep (0.05)
     print ("(x) Main menu")
-    print (player_operators)
+    for operator in player_operators:
+      print(operator)
     e = input("")
     if e == "x":
       menu = "main"
-
-
-
