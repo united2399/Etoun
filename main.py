@@ -19,11 +19,11 @@ from Utils import clear
 
 # Operators
 
-sand = Operator("Sand", "DPS", 0, 300, 300)
+op_1 = Operator("Texas", "DPS", 0, 300, 300)
 
-operators = [sand]
-player_operators = [sand]
-squad_1 = [sand]
+operators = [op_1]
+player_operators = [op_1]
+squad_1 = [op_1]
 active_squad = 1
 
 # Enemies
