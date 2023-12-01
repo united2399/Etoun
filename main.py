@@ -2,12 +2,12 @@
 import time
 import random
 import math
-# import colorama # for some reason colorama is currently fucked
+import colorama # for some reason colorama is currently fucked
 import os
 
 
 # From imports
-# from colorama import Fore, Back, Style # for some reason colorama is currently fucked
+from colorama import Fore, Back, Style # for some reason colorama is currently fucked
 from Classes import Operator, Enemy
 from Utils import clear
 
@@ -19,7 +19,7 @@ from Utils import clear
 
 # Operators
 
-sand = Operator("Sand", "DPS", 300, 300)
+sand = Operator("Sand", "DPS", 0, 300, 300)
 
 operators = [sand]
 player_operators = [sand]
@@ -34,6 +34,7 @@ current_enemies = []
 active_enemies = []
 
 p_lives = 5
+breakloop = False
 
 menu = "main"
 
@@ -80,6 +81,62 @@ while True:
       
       # Stage 1
       if e == "1":
+        
+        # vvv handles operator placement 
+        
+        print ("enemy count: 6")
+        if active_squad == 1:
+          attemptsForPos = 0
+          for i in squad_1:
+            attemptsForPos = 0
+            breakloop = False
+            while True:
+              if breakloop == True:
+                break
+              attemptsForPos += 1
+              clear()
+              pos = 0
+              if attemptsForPos == 0:
+                pos = random.randint(1, 6)
+              elif attemptsForPos == 1:
+                pos = random.randint(2, 5)
+              elif attemptsForPos == 2:
+                pos = random.randint(3, 6)
+              expected_pos = random.randint((pos - 1), (pos + 1))
+              print ("Intel says that this position - position ", attemptsForPos, " - should give operator ", i.name, "a vision of ", expected_pos)
+              print ("")
+              print ("This information may be slightly inaccurate. Proceed with operator placement?")
+              if attemptsForPos > 2:
+                print ("(This is your last placement re-roll for this operator.)")
+              while True:
+                proceed = input("proceed? (y/n)")
+                clear()
+                if proceed == "y":
+                  i.vision = pos
+                  breakloop = True
+                  break
+                else:
+                  if attemptsForPos < 3:
+                    break
+                if attemptsForPos > 2:
+                  pos = random.randint(3, 6)
+                  expected_pos = pos
+                  print ("Intel says that this position ( position ", attemptsForPos, ") should give operator ", i.name, "a vision of ", expected_pos)
+                  print ("")
+                  print (f"Due to your hesistancy in deciding. we have automatically deployed {i.name} to position {attemptsForPos}, giving them an expected vision of {expected_pos}")
+                  print ("")
+                  breakloop = True
+                  break
+                else:
+                  break
+
+        # ^^^ handles operator placement
+        print ("That's it for the operator placement orders. Prepare for battle.")
+        input("Press Enter to continue)")
+        
+        # Less nerdy stuff below 
+                  
+            
         current_enemies = [Enemy("Slug", 600, 0, 5) for _ in range(3)]
         active_enemies = [Enemy("Slug", 600, 0, 5) for _ in range(3)]
 
@@ -176,7 +233,14 @@ while True:
               # if enemy will pass in 5 turns
               if operatorhasattacked == False:
                 for enemy in active_enemies:
-                  if enemy.turnstopass == 43:
+                  if enemy.turnstopass == 4:
+                    operatorhasattacked = True
+                    enemy.health -= operator.attack
+                    break 
+              # if enemy will pass in 5 or 6 turns idk
+              if operatorhasattacked == False:
+                for enemy in active_enemies:
+                  if enemy.turnstopass == 5:
                     operatorhasattacked = True
                     enemy.health -= operator.attack
                     break 
