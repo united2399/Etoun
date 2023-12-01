@@ -1,9 +1,10 @@
 # Operator class
 
 class Operator:
-    def __init__(self, name, spec, health, attack):
+    def __init__(self, name, spec, vision, health, attack):
         self.name = name
         self.spec = spec
+        self.vision = vision
         self.health = health
         self.maxhealth = health
         self.attack = attack
