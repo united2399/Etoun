@@ -2,12 +2,10 @@
 import time
 import random
 import math
-import colorama # for some reason colorama is currently fucked
 import os
 
 
 # From imports
-from colorama import Fore, Back, Style # for some reason colorama is currently fucked
 from Classes import Operator, Enemy
 from Utils import clear
 
@@ -19,11 +17,15 @@ from Utils import clear
 
 # Operators
 
-op_1 = Operator("Texas", "DPS", 0, 300, 300)
+op_1 = Operator("Adnachiel", "DPS", 0, 300, 300)
+op_2 = Operator("Ranger", "DPS", 0, 300, 300)
 
-operators = [op_1]
-player_operators = [op_1]
-squad_1 = [op_1]
+operators = [op_1, op_2]
+player_operators = [op_1, op_2]
+squad_1 = [op_1, op_2]
+squad_2 = []
+squad_3 = []
+squad_4 = []
 active_squad = 1
 
 # Enemies
@@ -66,7 +68,7 @@ while True:
     clear()
     time.sleep (0.05)
     print ("(x) Main menu")
-    print ("(1) Plot or something 1")
+    print ("(1) Campaign 1")
     e = input("")
     if e == "x":
       menu = "main"
@@ -97,9 +99,9 @@ while True:
               clear()
               pos = 0
               if attemptsForPos == 0:
-                pos = random.randint(1, 6)
+                pos = random.randint(2, 6)
               elif attemptsForPos == 1:
-                pos = random.randint(2, 5)
+                pos = random.randint(3, 5)
               elif attemptsForPos == 2:
                 pos = random.randint(3, 6)
               expected_pos = random.randint((pos - 1), (pos + 1))
@@ -167,6 +169,9 @@ while True:
             if i.health < 0.1:
               active_enemies.remove(i)
           if enemy_count == 0 and p_lives > 0:
+            print ("")
+            print ("[^^ COMBAT LOG ^^]")
+            print ("")
             print ("mission: success")
             print (f"lives remaining: {p_lives}")
             input("")
@@ -268,12 +273,25 @@ while True:
     time.sleep (0.05)
     print ("(x) Main menu")
     print ("(1) Squad 1")
+    print ("(2) Squad 2")
+    print ("(3) Squad 3")
+    print ("(4) Squad 4")
     e = input("")
     if e == "x":
       menu = "main"
     if e == "1":
       for operator in squad_1:
         print (operator)
+    if e == "2":
+      for operator in squad_2:
+        print (operator)
+    if e == "3":
+      for operator in squad_3:
+        print (operator)
+    if e == "4":
+      for operator in squad_4:
+        print (operator)
+      input("")
 
   # Operators
   while menu == "operators":
